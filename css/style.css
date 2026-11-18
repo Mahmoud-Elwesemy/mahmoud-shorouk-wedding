@@ -468,11 +468,11 @@ html[lang="en"] .thanks .names { font-weight: 400; font-size: 46px; }
 img[data-slot] { display: block; opacity: 0; transition: opacity .8s ease; user-select: none; -webkit-user-drag: none; }
 img[data-slot].ok { opacity: 1; }
 img[data-slot]:not(.ok) { position: absolute; width: 0 !important; height: 0 !important; margin: 0 !important; pointer-events: none; }
-.orn-wrap img.divider { width: min(250px, 70%); height: auto; margin: -4px auto 0; mix-blend-mode: multiply; }
+.orn-wrap img.divider { width: min(250px, 70%); height: auto; margin: -4px auto 0; }
 .garland-wrap { padding: 0 8px; }
-.garland-wrap img.garland { width: 100%; max-width: 460px; height: auto; margin: 0 auto; mix-blend-mode: multiply; }
+.garland-wrap img.garland { width: 100%; max-width: 460px; height: auto; margin: 0 auto; }
 .garland-wrap:not(:has(img.ok)) { display: none; }
-.corner-img { position: absolute; z-index: 0; pointer-events: none; width: min(27%, 100px); height: auto; mix-blend-mode: multiply; }
+.corner-img { position: absolute; z-index: 0; pointer-events: none; width: min(27%, 100px); height: auto; }
 .corner-img.tl { top: 0; left: 0; } .corner-img.br { bottom: 0; right: 0; }
 .rsvp { padding-top: 64px; }
 .rsvp .corner-img { width: min(22%, 84px); }

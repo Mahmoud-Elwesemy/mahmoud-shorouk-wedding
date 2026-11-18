@@ -34,8 +34,8 @@ export const I18N = {
     shaylCount: 'باقي على شيل العزال',
     shaylDone: 'النهارده شيل العزال — نشوفكم على خير',
 
-    countTitle: 'العد التنازلي',
-    countSub: 'حتى نلتقي في يومنا المميز',
+    countTitle: 'العد التنازلي ليوم الزفاف',
+    countSub: 'باقي على يوم الفرح، 10 مارس 2027',
     cd_d: 'يوم',
     cd_h: 'ساعة',
     cd_m: 'دقيقة',
@@ -114,8 +114,8 @@ export const I18N = {
     shaylCount: 'Until Shayl El-Azal',
     shaylDone: 'Today is Shayl El-Azal — see you soon',
 
-    countTitle: 'Countdown',
-    countSub: 'Until we meet on our special day',
+    countTitle: 'Wedding Day Countdown',
+    countSub: 'Until our wedding day, 10 March 2027',
     cd_d: 'Days',
     cd_h: 'Hours',
     cd_m: 'Minutes',
