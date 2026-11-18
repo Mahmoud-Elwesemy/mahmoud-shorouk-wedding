@@ -21,7 +21,7 @@ service cloud.firestore {
 
       // القراءة والحذف للعريس فقط (غيّر الإيميل ده لإيميل جوجل بتاعك)
       allow read, delete: if request.auth != null
-        && request.auth.token.email == 'PUT-YOUR-GMAIL-HERE@gmail.com'
+        && request.auth.token.email == 'mahmoudweso430@gmail.com'
         && request.auth.token.email_verified == true;
 
       // ممنوع التعديل لأي حد
