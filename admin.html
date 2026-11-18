@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>لوحة الردود — محمود و شروق</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#fbeed3; --paper:#fff9ea; --gold:#b98a45; --gold-d:#8e6a2f; --ink:#5e4426; --ok:#4f7a35; --no:#a8402f; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:linear-gradient(#f6e3bd,#fbeed3); color:var(--ink); font-family:'Amiri',serif; font-size:18px; min-height:100vh; }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 60px; }
+    h1 { font-family:'Amiri',serif; font-weight:700; font-size:32px; margin:6px 0 2px; color:#6b4e29; }
+    .sub { color:var(--gold-d); margin:0 0 20px; }
+    .card { background:var(--paper); border:1px solid rgba(185,138,69,.45); border-radius:18px; padding:18px; box-shadow:0 8px 24px rgba(150,105,35,.14); }
+    button, .btn { font:inherit; cursor:pointer; border:0; border-radius:999px; padding:9px 22px; color:#fff9ea; background:linear-gradient(135deg,#cfa356,#a37630); box-shadow:0 4px 12px rgba(150,105,35,.35); }
+    button.ghost { background:transparent; color:var(--gold-d); border:1px solid rgba(185,138,69,.6); box-shadow:none; }
+    button.danger { background:transparent; color:var(--no); border:1px solid rgba(168,64,47,.5); box-shadow:none; padding:4px 14px; font-size:15px; }
+    .center { text-align:center; padding:40px 18px; }
+    .banner { background:#fff0c9; border:1px dashed var(--gold); border-radius:12px; padding:10px 14px; margin-bottom:16px; font-size:16px; }
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+    .stat { text-align:center; padding:12px 6px; background:var(--paper); border:1px solid rgba(185,138,69,.4); border-radius:14px; }
+    .stat b { display:block; font-size:30px; line-height:1.2; color:#6b4e29; }
+    .stat span { font-size:14px; color:var(--gold-d); }
+    .tools { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; align-items:center; }
+    .tools input, .tools select { font:inherit; padding:8px 14px; border-radius:12px; border:1px solid rgba(185,138,69,.5); background:#fffdf5; color:var(--ink); }
+    .tools input { flex:1; min-width:160px; }
+    .grow { flex:1; }
+    .row { display:grid; grid-template-columns: 1fr auto; gap:6px 12px; padding:14px 4px; border-bottom:1px solid rgba(185,138,69,.25); }
+    .row:last-child { border-bottom:0; }
+    .name { font-weight:700; font-size:20px; }
+    .badge { display:inline-block; font-size:14px; padding:1px 12px; border-radius:999px; margin-inline-start:8px; vertical-align:middle; }
+    .badge.yes { background:#e6f1d9; color:var(--ok); } .badge.no { background:#f6dcd6; color:var(--no); }
+    .msg { grid-column:1/-1; color:#6b4e29; background:#fff3d3; border-radius:12px; padding:8px 12px; white-space:pre-wrap; word-break:break-word; }
+    .meta { font-size:14px; color:var(--gold-d); }
+    .empty { text-align:center; color:var(--gold-d); padding:30px; }
+    .err { color:var(--no); }
+    [hidden] { display:none !important; }
+    @media (max-width:560px){ .stats{grid-template-columns:repeat(2,1fr);} }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>ردود الضيوف</h1>
+  <p class="sub">محمود و شروق · 10 مارس 2027</p>
+
+  <div id="demoBanner" class="banner" hidden>⚠️ وضع التجربة: Firebase لسه مش متضبط، فالردود اللي بتشوفها هنا هي اللي اتسجلت في المتصفح ده بس. اتبع README لربط قاعدة البيانات.</div>
+
+  <!-- تسجيل الدخول -->
+  <div id="login" class="card center" hidden>
+    <p>الصفحة دي خاصة بالعريس فقط. سجّل الدخول بحساب جوجل الخاص بك.</p>
+    <button id="btnLogin" type="button">الدخول بحساب Google</button>
+    <p id="loginErr" class="err"></p>
+  </div>
+
+  <!-- لوحة الردود -->
+  <div id="panel" hidden>
+    <div class="stats">
+      <div class="stat"><b id="sTotal">0</b><span>إجمالي الردود</span></div>
+      <div class="stat"><b id="sYes">0</b><span>سيحضرون</span></div>
+      <div class="stat"><b id="sNo">0</b><span>معتذرون</span></div>
+      <div class="stat"><b id="sGuests">0</b><span>إجمالي عدد الحضور</span></div>
+    </div>
+    <div class="tools">
+      <input id="q" type="search" placeholder="ابحث بالاسم أو في التهنئة…">
+      <select id="f"><option value="all">الكل</option><option value="yes">سيحضرون</option><option value="no">معتذرون</option></select>
+      <button id="btnCsv" class="ghost" type="button">تصدير CSV</button>
+      <button id="btnOut" class="ghost" type="button">خروج</button>
+    </div>
+    <div class="card" id="list"></div>
+    <p id="panelErr" class="err"></p>
+  </div>
+</div>
+
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>

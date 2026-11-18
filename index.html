@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>محمود و شروق — دعوة زفاف</title>
+  <meta name="description" content="دعوة زفاف محمود و شروق — 10 مارس 2027">
+  <meta name="theme-color" content="#fbeed3">
+  <meta property="og:title" content="محمود و شروق — دعوة زفاف">
+  <meta property="og:description" content="يتشرّفان بدعوتكم لحضور حفل زفافهما · 10 مارس 2027">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23fbeed3' stroke='%23b98a45' stroke-width='2'/%3E%3Ctext x='16' y='22' font-size='17' text-anchor='middle' fill='%23b98a45'%3E%E2%99%A1%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/envelope-closed.webp" type="image/webp" fetchpriority="high">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body class="locked">
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <!-- المظروف -->
+  <div class="intro" id="intro">
+    <div class="stage" id="introStage">
+      <picture class="ph">
+        <source srcset="assets/img/envelope-open.webp" type="image/webp">
+        <img id="envOpen" class="env-img open" src="assets/img/envelope-open.jpg" alt="" decoding="async" fetchpriority="low" draggable="false">
+      </picture>
+      <picture class="ph">
+        <source srcset="assets/img/envelope-closed.webp" type="image/webp">
+        <img id="envClosed" class="env-img closed" src="assets/img/envelope-closed.jpg" alt="" decoding="async" fetchpriority="high" draggable="false">
+      </picture>
+      <i class="bloom" id="bloom"></i>
+      <div class="sparks" id="sparks"></div>
+      <div class="seal-hit" id="sealHit" role="button" tabindex="0" data-i18n-aria="sealHint">
+        <i class="ring"></i><i class="ring r2"></i><i class="seal-fb"></i>
+      </div>
+      <p class="seal-hint" id="sealHint" data-i18n="sealHint"></p>
+    </div>
+    <i class="flash" id="flash"></i>
+  </div>
+
+  <!-- أزرار عائمة -->
+  <button class="lang-btn" id="langBtn" type="button" aria-label="Language"></button>
+  <button class="env-btn" id="envBtn" type="button" aria-label="Reopen envelope" data-i18n-aria="replay">
+    <svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 7l8.5 6.5L20.5 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <div class="dock" id="dock">
+   <div class="dgroup">
+    <button class="dbtn" id="musicBtn" type="button" hidden aria-label="music" data-i18n-aria="music">
+      <svg viewBox="0 0 24 24" class="eq" aria-hidden="true"><g fill="currentColor"><rect x="3.2" y="6" width="2.6" height="12" rx="1.3"/><rect x="8.2" y="6" width="2.6" height="12" rx="1.3"/><rect x="13.2" y="6" width="2.6" height="12" rx="1.3"/><rect x="18.2" y="6" width="2.6" height="12" rx="1.3"/></g></svg>
+    </button>
+    <button class="dbtn" id="nextBtn" type="button" hidden aria-label="next song" data-i18n-aria="nextSong">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 6.2l8 5.8-8 5.8z" fill="currentColor"/><path d="M17.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+   </div>
+    <button class="dbtn" id="scrollBtn" type="button" aria-label="auto-scroll" data-i18n-aria="autoscroll">
+      <svg viewBox="0 0 24 24" class="i-play" aria-hidden="true"><path class="ch1" d="M6 6.5l6 5.5 6-5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path class="ch2" d="M6 12.5l6 5.5 6-5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg viewBox="0 0 24 24" class="i-pause" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1.4" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1.4" fill="currentColor"/></svg>
+    </button>
+  </div>
+
+  <main class="invite" id="invite">
+
+    <!-- ١. الغلاف -->
+    <section class="hero" id="hero">
+      <div class="stage" id="heroStage">
+        <picture class="ph">
+          <source srcset="assets/img/hero.webp" type="image/webp">
+          <img class="hero-img" src="assets/img/hero.jpg" alt="" decoding="async" fetchpriority="low" draggable="false">
+        </picture>
+        <i class="glow sunglow"></i>
+        <i class="glow lant l"></i><i class="glow lant r"></i>
+        <div class="dust" id="dust" aria-hidden="true"></div>
+        <div class="hero-text" id="heroText">
+          <p class="t-kicker" data-i18n="heroKicker"></p>
+          <p class="t-names"><span class="t-name" data-i18n="groom"></span><span class="t-and" data-i18n="and"></span><span class="t-name" data-i18n="bride"></span></p>
+          <p class="t-date" data-date="short"></p>
+        </div>
+      </div>
+      <div class="petals" id="petals" aria-hidden="true"></div>
+      <div class="scroll-hint" aria-hidden="true"><span data-i18n="scrollHint"></span><i></i></div>
+    </section>
+
+    <!-- ٢. آية + دعوة -->
+    <section class="sec verse">
+      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      <p class="ayah rv" data-i18n="verse"></p>
+      <p class="ayah-ref rv" data-i18n="verseRef"></p>
+      <p class="invite-line rv" data-i18n="invite"></p>
+    </section>
+
+    <!-- ٣. التاريخ (كروت المسح) -->
+    <section class="sec date" id="date">
+      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      <h2 class="h rv" data-i18n="dateTitle"></h2>
+      <p class="sub rv"><span class="star">✦</span> <span data-i18n="dateHint"></span> <span class="star">✦</span></p>
+      <div class="cards rv" id="cards">
+        <div class="sc" data-part="day"><div class="sc-val"></div><canvas></canvas><div class="sc-lbl" data-i18n="day"></div></div>
+        <div class="sc" data-part="month"><div class="sc-val"></div><canvas></canvas><div class="sc-lbl" data-i18n="month"></div></div>
+        <div class="sc" data-part="year"><div class="sc-val"></div><canvas></canvas><div class="sc-lbl" data-i18n="year"></div></div>
+      </div>
+      <p class="weekday" id="weekday"></p>
+    </section>
+
+    <div class="garland-wrap"><img data-slot class="garland" src="assets/img/garland.webp" alt="" decoding="async"></div>
+
+    <!-- ٤. الجدول الزمني -->
+    <section class="sec timeline" id="timeline">
+      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      <h2 class="h rv" data-i18n="timelineTitle"></h2>
+      <div class="gold-rule rv"></div>
+      <div class="tl" id="tl"><i class="tl-line"></i><i class="tl-bloom"></i></div>
+    </section>
+
+    <!-- ٥. شيل العزال -->
+    <section class="sec shayl" id="shayl">
+      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      <div class="shayl-card rv">
+        <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+        <p class="shayl-sub" data-i18n="shaylSub"></p>
+        <h2 class="h" data-i18n="shaylTitle"></h2>
+        <div class="gold-rule"></div>
+        <p class="shayl-date" id="shaylDate"></p>
+        <p class="shayl-day" id="shaylDay"></p>
+        <p class="shayl-time" data-i18n="shaylTime"></p>
+      </div>
+
+      <!-- عدّاد شيل العزال -->
+      <div class="shayl-count" id="shaylCount">
+        <p class="sub rv" data-i18n="shaylCount"></p>
+        <div class="caps rv" id="capsS">
+          <div class="cap"><b id="sc-d">00</b><span data-i18n="cd_d"></span></div>
+          <div class="cap"><b id="sc-h">00</b><span data-i18n="cd_h"></span></div>
+          <div class="cap"><b id="sc-m">00</b><span data-i18n="cd_m"></span></div>
+          <div class="cap"><b id="sc-s">00</b><span data-i18n="cd_s"></span></div>
+        </div>
+        <p class="count-done" id="shaylDone" hidden data-i18n="shaylDone"></p>
+      </div>
+    </section>
+
+    <!-- ٦. العد التنازلي -->
+    <section class="sec countdown" id="countdown">
+      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      <h2 class="h rv" data-i18n="countTitle"></h2>
+      <p class="sub rv" data-i18n="countSub"></p>
+      <div class="caps rv" id="caps">
+        <div class="cap"><b id="cd-d">00</b><span data-i18n="cd_d"></span></div>
+        <div class="cap"><b id="cd-h">00</b><span data-i18n="cd_h"></span></div>
+        <div class="cap"><b id="cd-m">00</b><span data-i18n="cd_m"></span></div>
+        <div class="cap"><b id="cd-s">00</b><span data-i18n="cd_s"></span></div>
+      </div>
+      <p class="count-done" id="countDone" hidden data-i18n="countDone"></p>
+    </section>
+
+    <div class="garland-wrap"><img data-slot class="garland" src="assets/img/garland.webp" alt="" decoding="async"></div>
+
+    <!-- ٧. المكان -->
+    <section class="sec venue" id="venue">
+      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      <h2 class="h rv" data-i18n="venueTitle"></h2>
+      <p class="venue-name rv"><span data-i18n="venueName"></span></p>
+      <p class="venue-addr rv" data-i18n="venueAddress"></p>
+      <div class="gallery rv" id="gallery" hidden></div>
+      <div class="map rv">
+        <iframe id="mapFrame" title="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-scripts allow-same-origin" allowfullscreen></iframe>
+      </div>
+      <a class="btn gold rv" id="mapBtn" target="_blank" rel="noopener noreferrer" data-i18n="venueBtn"></a>
+    </section>
+
+    <!-- ٨. تأكيد الحضور -->
+    <section class="sec rsvp" id="rsvp">
+      <img data-slot class="corner-img tl" src="assets/img/bouquet-tl.webp" alt="" decoding="async">
+      <img data-slot class="corner-img br" src="assets/img/bouquet-br.webp" alt="" decoding="async">
+      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      <h2 class="h rv" data-i18n="rsvpTitle"></h2>
+      <p class="sub rv" data-i18n="rsvpSub"></p>
+      <form class="form rv" id="rsvpForm" novalidate>
+        <label class="fld"><span data-i18n="fName"></span>
+          <input type="text" id="fName" name="name" maxlength="80" autocomplete="name" data-i18n-ph="fNamePh" required>
+        </label>
+
+        <fieldset class="fld">
+          <legend data-i18n="fAttend"></legend>
+          <div class="radios">
+            <label class="radio"><input type="radio" name="attend" value="yes" checked><span data-i18n="yes"></span></label>
+            <label class="radio"><input type="radio" name="attend" value="no"><span data-i18n="no"></span></label>
+          </div>
+        </fieldset>
+
+        <label class="fld" id="guestsRow"><span data-i18n="fGuests"></span>
+          <select id="fGuests" name="guests"></select>
+        </label>
+
+        <label class="fld"><span data-i18n="fMsg"></span>
+          <textarea id="fMsg" name="message" rows="4" maxlength="500" data-i18n-ph="fMsgPh"></textarea>
+        </label>
+
+        <!-- حقل فخ للروبوتات -->
+        <input type="text" name="website" id="fHp" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+
+        <p class="msg" id="formMsg" role="status" aria-live="polite"></p>
+        <button class="btn gold wide" id="sendBtn" type="submit"><span data-i18n="send"></span></button>
+      </form>
+    </section>
+
+    <!-- ٩. الشكر + الفوتر -->
+    <section class="sec thanks" id="thanks">
+      <img data-slot class="corner-img tl" src="assets/img/bouquet-tl.webp" alt="" decoding="async">
+      <img data-slot class="corner-img br" src="assets/img/bouquet-br.webp" alt="" decoding="async">
+      <div class="thanks-inner">
+        <h2 class="h big rv" data-i18n="thanksTitle"></h2>
+        <div class="gold-rule rv"></div>
+        <p class="rv" data-i18n="thanksP1"></p>
+        <p class="rv" data-i18n="thanksP2"></p>
+        <p class="sign rv" data-i18n="thanksSign"></p>
+        <p class="names rv"><span data-i18n="groom"></span> <em data-i18n="and"></em> <span data-i18n="bride"></span></p>
+        <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="share">
+        <span data-i18n="share"></span>
+        <div class="share-row">
+          <a id="shWa" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.5 15.2L2 22l4.9-1.4A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.8 2 .9 2.1.1.2.1.3 0 .5-.1.2-.2.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.2.3.7 1.2 1.5 1.9 1 .9 1.900 1.200 2.200 1.300.3.1.4.1.6-.1.2-.2.7-.8.9-1.100.2-.3.4-.2.6-.1.2.1 1.500.7 1.800.9.3.1.4.2.5.3.1.2.1.8-.1 1.400Z"/></svg>
+          </a>
+          <a id="shFb" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 22v-8.2h2.8l.5-3.300h-3.300V8.400c0-.9.4-1.700 1.800-1.700h1.600V3.800S15.600 3.500 14.300 3.500c-2.700 0-4.400 1.600-4.400 4.500v2.500H7v3.300h2.900V22z"/></svg>
+          </a>
+          <button id="shCopy" type="button" aria-label="Copy link">
+            <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M10 14a4 4 0 0 0 5.700 0l3-3a4 4 0 0 0-5.700-5.700l-1 1M14 10a4 4 0 0 0-5.700 0l-3 3A4 4 0 0 0 11 18.700l1-1"/></svg>
+          </button>
+        </div>
+      </div>
+      <p class="foot-line" data-i18n="footer"></p>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+</body>
+</html>
