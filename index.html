@@ -171,11 +171,12 @@
 
     <!-- ٨. تأكيد الحضور -->
     <section class="sec rsvp" id="rsvp">
-      <img data-slot class="corner-img tl" src="assets/img/bouquet-tl.webp" alt="" decoding="async">
-      <img data-slot class="corner-img br" src="assets/img/bouquet-br.webp" alt="" decoding="async">
       <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
       <h2 class="h rv" data-i18n="rsvpTitle"></h2>
       <p class="sub rv" data-i18n="rsvpSub"></p>
+      <div class="form-wrap">
+      <img data-slot class="corner-img tl" src="assets/img/bouquet-tl.webp" alt="" decoding="async">
+      <img data-slot class="corner-img br" src="assets/img/bouquet-br.webp" alt="" decoding="async">
       <form class="form rv" id="rsvpForm" novalidate>
         <label class="fld"><span data-i18n="fName"></span>
           <input type="text" id="fName" name="name" maxlength="80" autocomplete="name" data-i18n-ph="fNamePh" required>
@@ -203,6 +204,7 @@
         <p class="msg" id="formMsg" role="status" aria-live="polite"></p>
         <button class="btn gold wide" id="sendBtn" type="submit"><span data-i18n="send"></span></button>
       </form>
+      </div>
     </section>
 
     <!-- ٩. الشكر + الفوتر -->
