@@ -135,6 +135,64 @@ function buildGuests() {
   sel.innerHTML = '';
   for (let i = 1; i <= CONFIG.maxGuests; i++) sel.add(new Option(nf.format(i), String(i)));
   sel.value = cur;
+  renderDD();
+}
+
+// قايمة منسدلة بتصميم الدعوة (بدل قايمة المتصفح الأصلية). الـ <select> الأصلي بيفضل مخفي وهو مصدر القيمة.
+let dd = null;
+function renderDD() {
+  const sel = $('#fGuests');
+  if (!dd) {
+    const wrap = document.createElement('div');
+    wrap.className = 'dd';
+    wrap.innerHTML = '<button type="button" class="dd-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="guestsLbl"><span class="dd-val"></span>'
+      + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'
+      + '<ul class="dd-list" role="listbox" tabindex="-1" aria-labelledby="guestsLbl" hidden></ul>';
+    sel.after(wrap);
+    sel.classList.add('native-hidden');
+    dd = { wrap, btn: $('.dd-btn', wrap), val: $('.dd-val', wrap), list: $('.dd-list', wrap), active: -1 };
+
+    const close = (focusBtn) => { dd.list.hidden = true; dd.wrap.classList.remove('open', 'up'); dd.btn.setAttribute('aria-expanded', 'false'); if (focusBtn) dd.btn.focus(); };
+    const setActive = (i) => {
+      const items = [...dd.list.children]; if (!items.length) return;
+      dd.active = Math.max(0, Math.min(items.length - 1, i));
+      items.forEach((li, k) => li.classList.toggle('act', k === dd.active));
+      items[dd.active].scrollIntoView({ block: 'nearest' });
+    };
+    const choose = (i) => { sel.selectedIndex = i; sel.dispatchEvent(new Event('change', { bubbles: true })); renderDD(); close(true); };
+    const open = () => {
+      renderDD();
+      dd.list.hidden = false; dd.wrap.classList.add('open'); dd.btn.setAttribute('aria-expanded', 'true');
+      const r = dd.btn.getBoundingClientRect(), h = dd.list.offsetHeight;
+      if (window.innerHeight - r.bottom - 84 < h && r.top > h + 20) dd.wrap.classList.add('up'); else dd.wrap.classList.remove('up');
+      setActive(sel.selectedIndex);
+      dd.list.focus({ preventScroll: true });
+      dd.list.scrollIntoView({ block: 'nearest' });
+    };
+    dd.btn.addEventListener('click', () => (dd.list.hidden ? open() : close(true)));
+    dd.btn.addEventListener('keydown', (e) => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(); } });
+    dd.list.addEventListener('click', (e) => { const li = e.target.closest('li'); if (li) choose([...dd.list.children].indexOf(li)); });
+    dd.list.addEventListener('keydown', (e) => {
+      const k = e.key;
+      if (k === 'ArrowDown') { e.preventDefault(); setActive(dd.active + 1); }
+      else if (k === 'ArrowUp') { e.preventDefault(); setActive(dd.active - 1); }
+      else if (k === 'Home') { e.preventDefault(); setActive(0); }
+      else if (k === 'End') { e.preventDefault(); setActive(99); }
+      else if (k === 'Enter' || k === ' ') { e.preventDefault(); choose(dd.active); }
+      else if (k === 'Escape') { e.preventDefault(); close(true); }
+      else if (k === 'Tab') close(false);
+      else if (/^[0-9]$/.test(k)) { const i = [...sel.options].findIndex((o) => o.text === k); if (i >= 0) setActive(i); }
+    });
+    document.addEventListener('pointerdown', (e) => { if (!dd.list.hidden && !dd.wrap.contains(e.target)) close(false); });
+  }
+  dd.val.textContent = sel.options[sel.selectedIndex]?.text || '';
+  dd.list.innerHTML = '';
+  [...sel.options].forEach((o, i) => {
+    const li = document.createElement('li');
+    li.setAttribute('role', 'option'); li.textContent = o.text;
+    li.setAttribute('aria-selected', i === sel.selectedIndex ? 'true' : 'false');
+    dd.list.appendChild(li);
+  });
 }
 
 // الجدول الزمني
@@ -230,102 +288,6 @@ function tick() {
   renderCount('sc', shaylTarget, '#capsS', '#shaylDone');
 }
 setInterval(tick, 1000);
-
-/* ------------------------------------------------------------------ */
-/*  كروت المسح (Scratch)                                              */
-/* ------------------------------------------------------------------ */
-const scratched = new Set();
-// خامة الذهب الحقيقية (اختياري): assets/img/gold-foil.webp — وإلا بيفضل التدرج المرسوم
-let foil = null; const foilWaiters = [];
-(() => {
-  const im = new Image();
-  im.onload = () => { foil = im; foilWaiters.forEach((f) => f()); };
-  im.src = 'assets/img/gold-foil.webp';
-})();
-function initScratch(card) {
-  const cv = $('canvas', card);
-  const ctx = cv.getContext('2d', { willReadFrequently: true });
-  let w = 0, h = 0, dpr = 1, drawing = false, moves = 0, done = false;
-
-  function paint() {
-    if (done) return;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    w = cv.clientWidth; h = cv.clientHeight;
-    if (!w || !h) return;
-    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ctx.globalCompositeOperation = 'source-over';
-    if (foil) {
-      // صورة الذهب بتغطي الكرت (cover) + لمعة خفيفة
-      const k = Math.max(w / foil.naturalWidth, h / foil.naturalHeight);
-      const fw = foil.naturalWidth * k, fh = foil.naturalHeight * k;
-      ctx.drawImage(foil, (w - fw) / 2, (h - fh) / 2, fw, fh);
-      const sh = ctx.createLinearGradient(0, 0, w, h);
-      sh.addColorStop(0, 'rgba(255,255,255,.28)'); sh.addColorStop(.5, 'rgba(255,255,255,0)'); sh.addColorStop(1, 'rgba(90,60,10,.18)');
-      ctx.fillStyle = sh; ctx.fillRect(0, 0, w, h);
-    } else {
-      const g = ctx.createLinearGradient(0, 0, w, h);
-      g.addColorStop(0, '#f6dc9c'); g.addColorStop(.28, '#d2a54f'); g.addColorStop(.5, '#f9e6b0');
-      g.addColorStop(.72, '#c99a45'); g.addColorStop(1, '#efd185');
-      ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
-      // ملمس معدني خفيف
-      ctx.globalAlpha = .18; ctx.strokeStyle = '#fff';
-      for (let i = -h; i < w; i += 5) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + h, h); ctx.stroke(); }
-      ctx.globalAlpha = .12; ctx.strokeStyle = '#6b4a14';
-      for (let i = 0; i < w + h; i += 7) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i - h, h); ctx.stroke(); }
-      ctx.globalAlpha = 1;
-    }
-    ctx.fillStyle = 'rgba(255,250,230,.85)'; ctx.font = `${Math.round(w * .34)}px serif`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('✦', w / 2, h / 2 + 2);
-  }
-
-  function pos(e) { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
-  function scratch(e) {
-    const [x, y] = pos(e);
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.lineWidth = Math.max(26, w * .26); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    ctx.lineTo(x, y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(x, y);
-    if (++moves % 10 === 0) check();
-  }
-  function check() {
-    if (done) return;
-    const data = ctx.getImageData(0, 0, cv.width, cv.height).data;
-    let clear = 0, n = 0;
-    for (let i = 3; i < data.length; i += 64) { n++; if (data[i] < 40) clear++; }
-    if (clear / n > 0.4) reveal();
-  }
-  function reveal() {
-    if (done) return;
-    done = true; cv.classList.add('done'); card.classList.add('done'); scratched.add(card.dataset.part);
-    if (scratched.size === 3) celebrate();
-  }
-
-  cv.addEventListener('pointerdown', (e) => { drawing = true; cv.setPointerCapture(e.pointerId); ctx.beginPath(); const [x, y] = pos(e); ctx.moveTo(x, y); scratch(e); e.preventDefault(); });
-  cv.addEventListener('pointermove', (e) => { if (drawing) scratch(e); });
-  const end = () => { if (drawing) { drawing = false; check(); } };
-  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
-  cv.tabIndex = 0; cv.setAttribute('role', 'button'); cv.setAttribute('aria-label', 'reveal');
-  cv.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); reveal(); } });
-  new ResizeObserver(() => paint()).observe(cv);
-  foilWaiters.push(() => { if (!drawing && !moves) paint(); });
-  paint();
-}
-$$('.sc').forEach(initScratch);
-
-function celebrate() {
-  $('#weekday').classList.add('show');
-  $('#heroText').classList.add('date-on');   // تاريخ الغلاف يظهر بس بعد المسح
-  const host = $('#cards');
-  const r = host.getBoundingClientRect();
-  for (let i = 0; i < 28; i++) {
-    const p = document.createElement('i');
-    const a = Math.random() * Math.PI * 2, d = 60 + Math.random() * 140;
-    p.style.cssText = `position:absolute;left:${r.width / 2}px;top:${r.height / 2}px;width:${3 + Math.random() * 5}px;height:${3 + Math.random() * 5}px;border-radius:50%;background:${Math.random() > .5 ? '#f3c969' : '#fff1c4'};pointer-events:none;z-index:3`;
-    host.style.position = 'relative'; host.appendChild(p);
-    const an = p.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 }, { transform: `translate(${Math.cos(a) * d}px,${Math.sin(a) * d}px) scale(.2)`, opacity: 0 }], { duration: 900 + Math.random() * 700, easing: 'cubic-bezier(.2,.7,.3,1)' });
-    an.onfinish = () => p.remove();
-  }
-}
 
 /* ------------------------------------------------------------------ */
 /*  ظهور تدريجي                                                       */

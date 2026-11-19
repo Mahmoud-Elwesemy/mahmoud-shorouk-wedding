@@ -238,11 +238,6 @@ body.ready .hero-text > :nth-child(1) { animation-delay: .25s; }
 body.ready .hero-text > :nth-child(2) { animation-delay: .5s; }
 body.ready .hero-text > :nth-child(3) { animation-delay: .85s; }
 @keyframes heroIn { to { opacity: 1; transform: none; } }
-/* تاريخ الغلاف مخفي لحد ما الضيف يمسح كروت التاريخ (class date-on بيتحط من app.js) */
-.t-date { max-height: 0; overflow: hidden; }
-body.ready .hero-text > .t-date { animation: none; opacity: 0; transform: translateY(10px); }
-.hero-text.date-on > .t-date { max-height: 2.2em; transition: max-height .8s ease; }
-body.ready .hero-text.date-on > .t-date { animation: heroIn 1.2s cubic-bezier(.2, .7, .3, 1) .35s forwards; }
 
 /* إضاءة حيّة فوق الصورة */
 .glow { position: absolute; border-radius: 50%; pointer-events: none; mix-blend-mode: screen; z-index: 1; }
@@ -306,7 +301,7 @@ html[lang="en"] .ayah { font-style: italic; font-size: 21px; line-height: 1.6; }
 .cards { display: flex; gap: 12px; justify-content: center; direction: rtl; margin-bottom: 8px; }
 html[dir="ltr"] .cards { direction: ltr; }
 .sc { width: 30%; max-width: 124px; text-align: center; font-size: 14px; color: var(--gold-d); }
-.sc-val, .sc canvas { aspect-ratio: 1 / 1.12; width: 100%; border-radius: 16px; }
+.sc-val { aspect-ratio: 1 / 1.12; width: 100%; border-radius: 16px; }
 .sc { position: relative; padding-bottom: 0; }
 .sc-val {
   display: grid; place-items: center; font-family: var(--f-num); font-weight: 700;
@@ -318,16 +313,9 @@ html[dir="ltr"] .cards { direction: ltr; }
 }
 .sc[data-part="month"] .sc-val { font-family: var(--f-name); font-size: 30px; }
 html[lang="en"] .sc[data-part="month"] .sc-val { font-size: 25px; font-style: italic; }
-.sc canvas {
-  position: absolute; top: 0; left: 0; touch-action: none; cursor: grab;
-  box-shadow: 0 8px 22px rgba(160, 115, 40, .22); transition: opacity .8s ease;
-}
-.sc canvas.done { opacity: 0; pointer-events: none; }
 .sc-lbl { margin-top: 8px; font-family: var(--f-label); }
-.sc.done .sc-val { animation: pop .8s cubic-bezier(.2, .8, .3, 1.3); }
 @keyframes pop { 0% { transform: scale(.92); } 60% { transform: scale(1.06); } 100% { transform: scale(1); } }
-.weekday { margin: 14px 0 0; font-family: var(--f-head); font-size: 22px; color: var(--gold-d); min-height: 1.6em; opacity: 0; transition: opacity 1s; }
-.weekday.show { opacity: 1; }
+.weekday { margin: 14px 0 0; font-family: var(--f-head); font-size: 22px; color: var(--gold-d); min-height: 1.6em; }
 
 /* =========================================================
    الجدول الزمني
@@ -556,7 +544,6 @@ html[dir="ltr"] .form-wrap .corner-img.br { right: auto; left: -18px; transform:
   box-shadow: 0 1px 0 #fff inset, 0 -2px 6px rgba(185, 138, 69, .18) inset, 0 3px 6px rgba(110, 75, 20, .16), 0 14px 26px rgba(130, 90, 30, .2);
 }
 .sc-val { background-clip: padding-box; }
-.sc canvas { box-shadow: 0 3px 6px rgba(110, 75, 20, .2), 0 14px 26px rgba(130, 90, 30, .2); }
 
 /* Amiri أصغر بصريًا من الخطوط الغنية → تكبير بسيط للعربي */
 html[lang="ar"] .sub { font-size: 18px; }
@@ -583,3 +570,41 @@ html[lang="ar"] .ayah { font-size: 25px; }
   *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition-duration: .001s !important; }
   .rv { opacity: 1; transform: none; }
 }
+
+/* ---------- قايمة عدد الحضور المخصصة (بتصميم الدعوة) ---------- */
+.native-hidden { position: absolute !important; opacity: 0; pointer-events: none; width: 1px !important; height: 1px !important; padding: 0 !important; border: 0 !important; overflow: hidden; }
+.dd { position: relative; }
+.dd-btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; text-align: start;
+  font: inherit; font-size: 17px; font-family: var(--f-num); color: var(--ink);
+  background: rgba(255, 252, 244, .9); background-image: linear-gradient(rgba(180, 135, 60, .08), rgba(255, 255, 255, 0) 30%);
+  border: 1px solid rgba(185, 138, 69, .5); border-radius: 14px; padding: 11px 14px; outline: none;
+  box-shadow: inset 0 2px 4px rgba(120, 85, 30, .12), 0 1px 0 rgba(255, 255, 255, .85);
+  transition: border-color .2s, box-shadow .2s;
+}
+html[lang="ar"] .dd-btn { font-size: 19px; }
+.dd-btn:focus-visible, .dd.open .dd-btn { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201, 162, 87, .25), inset 0 2px 4px rgba(120, 85, 30, .1); }
+.dd-btn svg { width: 20px; height: 20px; flex: none; color: var(--gold-d); transition: transform .25s; }
+.dd.open .dd-btn svg { transform: rotate(180deg); }
+.dd-list {
+  position: absolute; z-index: 30; top: calc(100% + 6px); inset-inline: 0; margin: 0; padding: 6px; list-style: none;
+  max-height: 300px; overflow-y: auto; outline: none; overscroll-behavior: contain; scroll-margin: 12px 0 96px;
+  scrollbar-width: thin; scrollbar-color: rgba(185, 138, 69, .6) transparent;
+  background: var(--grain), linear-gradient(160deg, #fffaf0, #f7ead0 70%, #f1dfb8);
+  border: 1px solid rgba(185, 138, 69, .65); border-radius: 16px;
+  box-shadow: 0 1px 0 #fff inset, 0 6px 14px rgba(110, 75, 20, .18), 0 18px 36px rgba(130, 90, 30, .26);
+  transform-origin: top center; animation: ddIn .18s ease-out;
+}
+.dd.up .dd-list { top: auto; bottom: calc(100% + 6px); transform-origin: bottom center; }
+@keyframes ddIn { from { opacity: 0; transform: translateY(-6px) scale(.98); } to { opacity: 1; transform: none; } }
+.dd-list[hidden] { display: none; }
+.dd-list li {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer;
+  padding: 10px 14px; border-radius: 11px; font-family: var(--f-num); font-size: 18px; color: var(--ink); line-height: 1.3;
+  transition: background .15s;
+}
+html[lang="ar"] .dd-list li { font-size: 20px; }
+.dd-list li:hover, .dd-list li.act { background: rgba(240, 213, 150, .45); }
+.dd-list li[aria-selected="true"] { background: #f6e3b8; font-weight: 700; color: #6b4e29; box-shadow: inset 0 0 0 1px rgba(185, 138, 69, .5); }
+.dd-list li[aria-selected="true"]::after { content: '✦'; color: var(--gold); font-size: 13px; }
+.dd-list li + li { margin-top: 2px; }

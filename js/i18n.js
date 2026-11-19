@@ -19,7 +19,6 @@ export const I18N = {
     invite: 'يتشرّف محمود و شروق بدعوتكم لحضور حفل زفافهما',
 
     dateTitle: 'التاريخ',
-    dateHint: 'امسح لإظهار التاريخ',
     day: 'اليوم',
     month: 'الشهر',
     year: 'السنة',
@@ -99,7 +98,6 @@ export const I18N = {
     invite: 'Mahmoud & Shorouk joyfully invite you to celebrate their wedding',
 
     dateTitle: 'The Date',
-    dateHint: 'Scratch to reveal the date',
     day: 'Day',
     month: 'Month',
     year: 'Year',

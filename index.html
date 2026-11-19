@@ -91,30 +91,21 @@
       <p class="invite-line rv" data-i18n="invite"></p>
     </section>
 
-    <!-- ٣. التاريخ (كروت المسح) -->
+    <!-- ٣. التاريخ -->
     <section class="sec date" id="date">
       <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
       <h2 class="h rv" data-i18n="dateTitle"></h2>
-      <p class="sub rv"><span class="star">✦</span> <span data-i18n="dateHint"></span> <span class="star">✦</span></p>
       <div class="cards rv" id="cards">
-        <div class="sc" data-part="day"><div class="sc-val"></div><canvas></canvas><div class="sc-lbl" data-i18n="day"></div></div>
-        <div class="sc" data-part="month"><div class="sc-val"></div><canvas></canvas><div class="sc-lbl" data-i18n="month"></div></div>
-        <div class="sc" data-part="year"><div class="sc-val"></div><canvas></canvas><div class="sc-lbl" data-i18n="year"></div></div>
+        <div class="sc" data-part="day"><div class="sc-val"></div><div class="sc-lbl" data-i18n="day"></div></div>
+        <div class="sc" data-part="month"><div class="sc-val"></div><div class="sc-lbl" data-i18n="month"></div></div>
+        <div class="sc" data-part="year"><div class="sc-val"></div><div class="sc-lbl" data-i18n="year"></div></div>
       </div>
       <p class="weekday" id="weekday"></p>
     </section>
 
     <div class="garland-wrap"><img data-slot class="garland" src="assets/img/garland.webp" alt="" decoding="async"></div>
 
-    <!-- ٤. الجدول الزمني -->
-    <section class="sec timeline" id="timeline">
-      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
-      <h2 class="h rv" data-i18n="timelineTitle"></h2>
-      <div class="gold-rule rv"></div>
-      <div class="tl" id="tl"><i class="tl-line"></i><i class="tl-bloom"></i></div>
-    </section>
-
-    <!-- ٥. شيل العزال -->
+    <!-- ٤. شيل العزال -->
     <section class="sec shayl" id="shayl">
       <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
       <div class="shayl-card rv">
@@ -140,7 +131,7 @@
       </div>
     </section>
 
-    <!-- ٦. العد التنازلي -->
+    <!-- ٥. العد التنازلي -->
     <section class="sec countdown" id="countdown">
       <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
       <h2 class="h rv" data-i18n="countTitle"></h2>
@@ -155,6 +146,14 @@
     </section>
 
     <div class="garland-wrap"><img data-slot class="garland" src="assets/img/garland.webp" alt="" decoding="async"></div>
+
+    <!-- ٦. الجدول الزمني -->
+    <section class="sec timeline" id="timeline">
+      <div class="orn-wrap"><img data-slot class="divider" src="assets/img/divider-gold.webp" alt="" decoding="async"></div>
+      <h2 class="h rv" data-i18n="timelineTitle"></h2>
+      <div class="gold-rule rv"></div>
+      <div class="tl" id="tl"><i class="tl-line"></i><i class="tl-bloom"></i></div>
+    </section>
 
     <!-- ٧. المكان -->
     <section class="sec venue" id="venue">
@@ -190,9 +189,9 @@
           </div>
         </fieldset>
 
-        <label class="fld" id="guestsRow"><span data-i18n="fGuests"></span>
-          <select id="fGuests" name="guests"></select>
-        </label>
+        <div class="fld" id="guestsRow"><span id="guestsLbl" data-i18n="fGuests"></span>
+          <select id="fGuests" name="guests" tabindex="-1" aria-hidden="true"></select>
+        </div>
 
         <label class="fld"><span data-i18n="fMsg"></span>
           <textarea id="fMsg" name="message" rows="4" maxlength="500" data-i18n-ph="fMsgPh"></textarea>
